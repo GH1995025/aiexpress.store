@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIExpress.store | Your AI Tools Directory</title>
+    <style>
+        :root {
+            --apple-blue: #0071e3;
+            --apple-gray: #f5f5f7;
+            --apple-dark: #1d1d1f;
+            --apple-light: #ffffff;
+            --apple-green: #2fd158;
+            --apple-red: #ff3b30;
+            --apple-orange: #ff9500;
+            --apple-purple: #af52de;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+        
+        body {
+            background-color: var(--apple-gray);
+            color: var(--apple-dark);
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: var(--apple-light);
+            padding: 20px;
+            position: sticky;
+            top: 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--apple-dark);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .logo span {
+            color: var(--apple-blue);
+        }
+        
+        .search-container {
+            position: relative;
+            margin-bottom: 15px;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 12px 20px;
+            border-radius: 10px;
+            border: 1px solid #d2d2d7;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        
+        .search-input:focus {
+            border-color: var(--apple-blue);
+            box-shadow: 0 0 0 2px rgba(0, 113, 227, 0.2);
+        }
+        
+        .categories {
+            display: flex;
+            overflow-x: auto;
+            gap: 10px;
+            padding-bottom: 10px;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        .categories::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .category-btn {
+            white-space: nowrap;
+            padding: 8px 16px;
+            background-color: var(--apple-light);
+            border: 1px solid #d2d2d7;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .category-btn:hover, .category-btn.active {
+            background-color: var(--apple-blue);
+            color: var(--apple-light);
+            border-color: var(--apple-blue);
+        }
+        
+        main {
+            padding: 30px 0;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+            background-color: var(--apple-light);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .section-title {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--apple-dark);
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title-icon {
+            width: 30px;
+            height: 30px;
+            background-color: var(--apple-blue);
+            color: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            font-size: 16px;
+        }
+        
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .tool-card {
+            background-color: var(--apple-gray);
+            border-radius: 12px;
+            padding: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tool-name {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--apple-dark);
+        }
+        
+        .tool-link {
+            color: var(--apple-blue);
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+        
+        .tool-link:hover {
+            text-decoration: underline;
+        }
+        
+        .tool-price {
+            display: inline-block;
+            font-size: 12px;
+            padding: 4px 8px;
+            border-radius: 12px;
+            background-color: rgba(0, 0, 0, 0.05);
+            margin-left: 8px;
+        }
+        
+        .tool-description {
+            font-size: 14px;
+            color: #424245;
+            margin-top: 8px;
+        }
+        
+        footer {
+            background-color: var(--apple-dark);
+            color: var(--apple-light);
+            padding: 30px 0;
+            text-align: center;
+            font-size: 14px;
+        }
+        
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background-color: var(--apple-blue);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .scroll-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        @media (max-width: 768px) {
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .section {
+                padding: 20px 15px;
+            }
+            
+            .scroll-top {
+                bottom: 20px;
+                right: 20px;
+                width: 40px;
+                height: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <a href="#" class="logo">AI<span>Express</span>.store</a>
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Search AI tools..." id="searchInput">
+            </div>
+            <div class="categories">
+                <button class="category-btn active" data-category="all">All Tools</button>
+                <button class="category-btn" data-category="chatbots">Chatbots</button>
+                <button class="category-btn" data-category="image">Image Generation</button>
+                <button class="category-btn" data-category="coding">Code Assistants</button>
+                <button class="category-btn" data-category="translation">Translation</button>
+                <button class="category-btn" data-category="writing">Writing</button>
+                <button class="category-btn" data-category="video">Video Editing</button>
+                <button class="category-btn" data-category="education">Education</button>
+                <button class="category-btn" data-category="music">Music</button>
+                <button class="category-btn" data-category="search">Search</button>
+                <button class="category-btn" data-category="data">Data Analysis</button>
+                <button class="category-btn" data-category="productivity">Productivity</button>
+            </div>
+        </div>
+    </header>
+    
+    <main class="container">
+        <!-- Chatbots Section -->
+        <section class="section" id="chatbots">
+            <h2 class="section-title">
+                <div class="section-title-icon">💬</div>
+                Chatbots
+            </h2>
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <h3 class="tool-name">ChatGPT <span class="tool-price">Free/Paid</span></h3>
+                    <a href="https://chat.openai.com/" class="tool-link" target="_blank">chat.openai.com</a>
+                    <p class="tool-description">Natural language AI assistant by OpenAI capable of versatile conversations and content creation.</p>
+                </div>
+                <div class="tool-card">
+                    <h3 class="tool-name">Claude <span class="tool-price">Free/Paid</span></h3>
+                    <a href="https://claude.ai/" class="tool-link" target="_blank">claude.ai</a>
+                    <p class="tool-description">AI assistant from Anthropic that excels at language understanding and logical reasoning.</p>
+                </div>
+                <div class="tool-card">
+                    <h3 class="tool-name">Character.AI <span class="tool-price">Free</span></h3>
+                    <a href="https://beta.character.ai/" class="tool-link" target="_blank">beta.character.ai</a>
+                    <p class="tool-description">Platform allowing users to create and customize virtual characters for personalized conversations.</p>
+                </div>
+                <div class="tool-card">
+                    <h3 class="tool-name">Replika <span class="tool-price">Free/Paid</span></h3>
+                    <a href="https://replika.ai/" class="tool-link" target="_blank">replika.ai</a>
+                    <p class="tool-description">AI companion offering emotional support and conversation to help users combat loneliness.</p>
+                </div>
+                <div class="tool-card">
+                    <h3 class="tool-name">Mitsuku <span class="tool-price">Free</span></h3>
+                    <a href="https://www.pandorabots.com/mitsuku/" class="tool-link" target="_blank">pandorabots.com/mitsuku</a>
+                    <p class="tool-description">Award-winning chatbot known for natural and fluid conversations with users.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Image Generation Section -->
+        <section class="section" id="image">
+            <h2 class="section-title">
+                <div class="section-title-icon">🖼️</div>
+                Image Generation Tools
+            </h2>
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <h3 class="tool-name">DALL·E 2 <span class="tool-price">Free/Paid</span></h3>
+                    <a href="https://openai.com/dall-e-2/" class="tool-link" target="_blank">openai.com/dall-e-2</a>
+                    <p class="tool-description">OpenAI's image generation system that creates unique images from text descriptions.</p>
+                </div>
+                <div class="tool-card">
+                    <h3 class="tool-name">Midjourney <span class="tool-price">Paid</span></h3>
+                    <a href="https://www.midjourney.com/" class="tool-link" target="_blank">midjourney.com</a>
+                    <p class="tool-description">Artistic image generator beloved by designers and creators for its distinct aesthetic style.</p>
+                </div>
+                <div class="tool-card">
+                    <h3 class="tool-name">Stable Diffusion <span class="tool-price">Free/Open Source</span></h3>
+                    <a href="https://stability.ai/" class="tool-link" target="_blank">stability.ai</a>
+                    <p class="tool-description">Efficient open-source image generation model supporting various style transfers and customizations.</p>
+                </div>
+                <div class="tool-card">
+                    <h3 class="tool-name">Adobe Firefly <span class="tool-price">Free/Paid</span></h3>
+                    <a href="https://www.adobe.com/products/firefly.html" class="tool-link" target="_blank">adobe.com/products/firefly</a>
+                    <p class="tool-description">Generative AI tool integrated with Adobe ecosystem for seamless creative workflow.</p>
+                </div>
+                <div class="tool-card">
+                    <h3 class="tool-name">Dream by Wombo <span class="tool-price">Free/Paid</span></h3>
+                    <a href="https://www.wombo.art/" class="tool-link" target="_blank">wombo.art</a>
+                    <p class="tool-description">User-friendly AI art generator creating artwork from simple text descriptions.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Code Assistant Section -->
+        <section class="section" id="coding">
+            <h2 class="section-title">
+                <div class="section-title-icon">💻</div>
+                Code Assistant Tools
+            </h2>
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <h3 class="tool-name">GitHub Copilot <span class="tool-price">Paid</span></h3>
+                    <a href="https://copilot.github.com/" class="tool-link" target="_blank">copilot.github.com</a>
+                    <p class="tool-description">OpenAI Codex-powered assistant generating real-time code snippets from natural language prompts.</p>
+                </div>
+                <div class="tool-card">
+                    <h3 class="tool-name">Codeium <span class="tool-price">Free</span></h3>
+                    <a href="https://codeium.com/" class="tool-link" target="_blank">codeium.com</a>
+                    <p class="tool-description">Multi-language code completion tool integrating with various editors to boost development efficiency.</p>
+                </div>
+                <div class="tool-card">
+                    <h3 class="tool-name">Amazon CodeWhisperer <span class="tool-price">Free</span></h3>
+                    <a href="https://aws.amazon.com/codewhisperer/" class="tool-link" target="_blank">aws.amazon.com/codewhisperer</a>
+                    <p class="tool-description">Machine learning-based code recommendation tool providing intelligent suggestions for developers.</p>
+                </div>
+                <div class="tool-card">
+                    <h3 class="tool-name">Tabnine <span class="tool-price">Free/Paid</span></h3>
+                    <a href="https://www.tabnine.com/" class="tool-link" target="_blank">tabnine.com</a>
+                    <p class="tool-description">Deep learning-powered code completion tool supporting multiple programming languages.</p>
+                </div>
+                <div class="tool-card">
+                    <h3 class="tool-name">Sourcery <span class="tool-price">Free/Paid</span></h3>
+                    <a href="https://sourcery.ai/" class="tool-link" target="_blank">sourcery.ai</a>
+                    <p class="tool-description">Automated code refactoring tool helping developers improve code quality.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Translation Section -->
+        <section class="section" id="translation">
+            <h2 class="section-title">
+                <div class="section-title-icon">🌐</div>
+                Translation Tools
+            </h2>
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <h3 class="tool-name">DeepL <span class="tool-price">Free/Paid</span></h3>
+                    <a href="https://www.deepl.com/translator" class="tool-link" target="_blank">deepl.com/translator</a>
+                    <p class="tool-description">Known for high-quality natural language translations between multiple languages.</p>
+                </div>
+                <div class="tool-card">
+                    <h3 class="tool-name">Google Translate <span class="tool-price">Free</span></h3>
+                    <a href="https://translate.google.com/" class="tool-link" target="_blank">translate.google.com</a>
+                    <p class="tool-description">Widely used translation service covering global languages with fast response times.</p>
+                </div>
+                <div class="tool-card">
+                    <h3 class="tool-name">Microsoft Translator <span class="tool-price">Free</span></h3>
+                    <a href="https://www.bing.com/translator" class="tool-link" target="_blank">bing.com/translator</a>
+                    <p class="tool-description">Translation service integrated with Microsoft ecosystem supporting real-time multilingual communication.</p>
+                </div>
+                <div class="tool-card">
+                    <h3 class="tool-name">Yandex Translate <span class="tool-price">Free</span></h3>
+                    <a href="https://translate.yandex.com/" class="tool-link" target="_blank">translate.yandex.com</a>
+                    <p class="tool-description">Multi-language translation service excelling in Russian and Eastern European languages.</p>
+                </div>
+                <div class="tool-card">
+                    <h3 class="tool-name">Papago <span class="tool-price">Free</span></h3>
+                    <a href="https://papago.naver.com/" class="tool-link" target="_blank">papago.naver.com</a>
+                    <p class="tool-description">Naver's translation service optimized for Asian languages with high accuracy rates.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Writing Section -->
+        <section class="section" id="writing">
+            <h2 class="section-title">
+                <div class="section-title-icon">✍️</div>
+                Writing Assistant Tools
+            </h2>
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <h3 class="tool-name">Grammarly <span class="tool-price">Free/Paid</span></h3>
+                    <a href="https://www.grammarly.com/" class="tool-link" target="_blank">grammarly.com</a>
+                    <p class="tool-description">Intelligent grammar checker providing style suggestions to improve writing quality.</p>
+                </div>
+                <div class="tool-card">
+                    <h3 class="tool-name">Jasper AI <span class="tool-price">Paid</span></h3>
+                    <a href="https://www.jasper.ai/" class="tool-link" target="_blank">jasper.ai</a>
+                    <p class="tool-description">AI content creation platform supporting various writing styles and marketing copy generation.</p>
+                </div>
+                <div class="tool-card">
+                    <h3 class="tool-name">ProWritingAid <span class="tool-price">Free/Paid</span></h3>
+                    <a href="https://prowritingaid.com/" class="tool-link" target="_blank">prowritingaid.com</a>
+                    <p class="tool-description">Comprehensive writing assistant offering grammar checking, style improvements, and structure suggestions.</p>
+                </div>
+                <div class="tool-card">
+                    <h3 class="tool-name">QuillBot <span class="tool-price">Free/Paid</span></h3>
+                    <a href="https://quillbot.com/" class="tool-link" target="_blank">quillbot.com</a>
+                    <p class="tool-description">Smart paraphrasing tool helping users optimize text expressions through synonym replacement.</p>
+                </div>
+                <div class="tool-card">
+                    <h3 class="tool-name">Writefull <span class="tool-price">Free/Paid</span></h3>
+                    <a href="https://writefull.com/" class="tool-link" target="_blank">writefull.com</a>
+                    <p class="tool-description">AI tool designed for academic writing, providing real-time language proofreading and suggestions.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- More sections with similar structure -->
+        
+        <!-- Video Editing Section -->
+        <section class="section" id="video">
+            <h2 class="section-title">
+                <div class="section-title-icon">🎬</div>
+                Video Editing Tools
+            </h2>
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <h3 class="tool-name">Synthesia <span class="tool-price">Paid</span></h3>
+                    <a href="https://www.synthesia.io/" class="tool-link" target="_blank">synthesia.io</a>
+                    <p class="tool-description">Creates videos with virtual presenters and voiceovers for multilingual content creation.</p>
+                </div>
+                <div class="tool-card">
+                    <h3 class="tool-name">Wisecut <span class="tool-price">Free/Paid</span></h3>
+                    <a href="https://www.wisecut.video/" class="tool-link" target="_blank">wisecut.video</a>
+                    <p class="tool-description">Automatically edits videos with music and subtitles, simplifying the video editing workflow.</p>
+                </div>
+                <div class="tool-card">
+                    <h3 class="tool-name">InVideo <span class="tool-price">Free/Paid</span></h3>
+                    <a href="https://invideo.io/" class="tool-link" target="_blank">invideo.io</a>
+                    <p class="tool-description">Offers rich templates and AI editing features for quick professional video creation.</p>
+                </div>
+                <div class="tool-card">
+                    <h3 class="tool-name">Pictory <span class="tool-price">Free/Paid</span></h3>
+                    <a href="https://pictory.ai/" class="tool-link" target="_blank">pictory.ai</a>
+                    <p class="tool-description">Extracts highlights from long videos for creating short-form social media content.</p>
+                </div>
+                <div class="tool-card">
+                    <h3 class="tool-name">Magisto <span class="tool-price">Paid</span></h3>
+                    <a href="https://www.magisto.com/" class="tool-link" target="_blank">magisto.com</a>
+                    <p class="tool-description">Analyzes video content to automatically generate editing effects and storylines for marketing videos.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Education Section -->
+        <section class="section" id="education">
+            <h2 class="section-title">
+                <div class="section-title-icon">🎓</div>
+                Educational Tools
+            </h2>
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <h3 class="tool-name">Quizlet <span class="tool-price">Free/Paid</span></h3>
+                    <a href="https://quizlet.com/" class="tool-link" target="_blank">quizlet.com</a>
+                    <p class="tool-description">Helps users memorize information efficiently through flashcards, tests, and games.</p>
+                </div>
+                <div class="tool-card">
+                    <h3 class="tool-name">Socratic <span class="tool-price">Free</span></h3>
+                    <a href="https://socratic.org/" class="tool-link" target="_blank">socratic.org</a>
+                    <p class="tool-description">Google-backed educational tool using AI to answer academic questions with detailed explanations.</p>
+                </div>
+                <div class="tool-card">
+                    <h3 class="tool-name">Photomath <span class="tool-price">Free/Paid</span></h3>
+                    <a href="https://photomath.com/en/" class="tool-link" target="_blank">photomath.com</a>
+                    <p class="tool-description">Uses camera to scan math problems and provides detailed step-by-step solutions.</p>
+                </div>
+                <div class="tool-card">
+                    <h3 class="tool-name">Brainly <span class="tool-price">Free/Paid</span></h3>
+                    <a href="https://brainly.com/" class="tool-link" target="_blank">brainly.com</a>
+                    <p class="tool-description">Global student help platform providing AI-assisted answers and learning support.</p>
+                </div>
+                <div class="tool-card">
+                    <h3 class="tool-name">Duolingo <span class="tool-price">Free/Paid</span></h3>
+                    <a href="https://www.duolingo.com/" class="tool-link" target="_blank">duolingo.com</a>
+                    <p class="tool-description">Uses gamified learning approach with AI to personalize language learning progress.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Music Section -->
+        <section class="section" id="music">
+            <h2 class="section-title">
+                <div class="section-title-icon">🎵</div>
+                Music Generation Tools
+            </h2>
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <h3 class="tool-name">AIVA <span class="tool-price">Free/Paid</span></h3>
+                    <a href="https://www.aiva.ai/" class="tool-link" target="_blank">aiva.ai</a>
+                    <p class="tool-description">AI-driven composition platform creating original music based on user preferences.</p>
+                </div>
+                <div class="tool-card">
+                    <h3 class="tool-name">Amper Music <span class="tool-price">Paid</span></h3>
+                    <a href="https://www.ampermusic.com/" class="tool-link" target="_blank">ampermusic.com</a>
+                    <p class="tool-description">Enables quick professional music generation for videos, games, and other applications.</p>
+                </div>
+                <div class="tool-card">
+                    <h3 class="tool-name">Boomy <span class="tool-price">Free/Paid</span></h3>
+                    <a href="https://boomy.com/" class="tool-link" target="_blank">boomy.com</a>
+                    <p class="tool-description">Creates and publishes original songs with AI—no music background required.</p>
+                </div>
+                <div class="tool-card">
+                    <h3 class="tool-name">Soundraw <span class="tool-price">Free/Paid</span></h3>
+                    <a href="https://soundraw.io/" class="tool-link" target="_blank">soundraw.io</a>
+                    <p class="tool-description">Offers various music styles and moods to automatically generate scene-appropriate background music.</p>
+                </div>
+                <div class="tool-card">
+                    <h3 class="tool-name">Ecrett Music <span class="tool-price">Paid</span></h3>
+                    <a href="https://ecrettmusic.com/" class="tool-link" target="_blank">ecrettmusic.com</a>
+                    <p class="tool-description">Automatically generates music matching video emotion with simple operation and natural results.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Search Section -->
+        <section class="section" id="search">
+            <h2 class="section-title">
+                <div class="section-title-icon">🔍</div>
+                Search Engine Enhancement Tools
+            </h2>
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <h3 class="tool-name">Perplexity AI <span class="tool-price">Free/Paid</span></h3>
+                    <a href="https://www.perplexity.ai/" class="tool-link" target="_blank">perplexity.ai</a>
+                    <p class="tool-description">Combines large language models with deep learning for conversational precise answers.</p>
+                </div>
+                <div class="tool-card">
+                    <h3 class="tool-name">Phind <span class="tool-price">Free</span></h3>
+                    <a href="https://www.phind.com/" class="tool-link" target="_blank">phind.com</a>
+                    <p class="tool-description">AI search engine designed for developers providing quick answers to code-related questions.</p>
+                </div>
+                <div class="tool-card">
+                    <h3 class="tool-name">You.com <span class="tool-price">Free/Paid</span></h3>
+                    <a href="https://you.com/" class="tool-link" target="_blank">you.com</a>
+                    <p class="tool-description">Offers personalized search experience while integrating AI tools for information organization.</p>
+                </div>
+                <div class="tool-card">
+                    <h3 class="tool-name">Neeva <span class="tool-price">Free/Paid</span></h3>
+                    <a href="https://neeva.com/" class="tool-link" target="_blank">neeva.com</a>
+                    <p class="tool-description">Privacy-focused search engine using AI to optimize search result relevance.</p>
+                </div>
+                <div class="tool-card">
+                    <h3 class="tool-name">Elicit <span class="tool-price">Free</span></h3>
+                    <a href="https://elicit.org/" class="tool-link" target="_blank">elicit.org</a>
+                    <p class="tool-description">Uses AI to automatically organize academic literature and data to help researchers find answers.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Data Analysis Section -->
+        <section class="section" id="data">
+            <h2 class="section-title">
